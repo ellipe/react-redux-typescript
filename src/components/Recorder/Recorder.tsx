@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectDateStart, start, stop } from '../../redux/recorder';
 import cx from 'classnames';
 import './Recorder.css';
+import { prefixZero } from '../../lib/utils';
 
 const Recorder = () => {
   const dispatch = useDispatch();
@@ -11,8 +12,6 @@ const Recorder = () => {
   const [, setCount] = useState(0);
 
   const started = dateStart !== '';
-
-  const prefixZero = (num: number) => (num < 10 ? `0${num}` : `${num}`);
 
   const handleClick = () => {
     if (started) {

@@ -2,7 +2,7 @@ import { RootState } from './store';
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 
-interface UserEvent {
+export interface UserEvent {
   id: number;
   title: string;
   dateStart: string;
@@ -18,6 +18,14 @@ interface UserEventsState {
 const initialState: UserEventsState = {
   byIds: {},
   allIds: []
+}
+
+// selectors
+const selectUserEventsState = (rootState: RootState) => rootState.userEvents
+
+export const selectUserEvents = (rootState: RootState) => {
+  const state = selectUserEventsState(rootState)
+  return state.allIds.map(id => state.byIds[id])
 }
 
 // actions
@@ -37,7 +45,7 @@ interface LoadFailureAction extends Action<typeof LOAD_FAILURE>{
 }
 
 // action creator
-export const loadUserEvent = (): ThunkAction<void, RootState, undefined, LoadRequestAction | LoadSucessAction | LoadFailureAction> =>  async (dispatch, getState) => {
+export const loadUserEvents = (): ThunkAction<void, RootState, undefined, LoadRequestAction | LoadSucessAction | LoadFailureAction> =>  async (dispatch, getState) => {
   dispatch({
     type: LOAD_REQUEST
   })
